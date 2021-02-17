@@ -44,12 +44,12 @@ const styles = {
 
 function MiniPallete(props) {
   const { classes, paletteName, emoji, colors, handleClick } = props;
-  const miniColorBoxes = colors.map((color) => {
+  const miniColorBoxes = colors.map((co) => {
     return (
       <div
-        key={color.name}
+        key={co.name}
         className={classes.miniColor}
-        style={{ backgroundColor: color.color }}
+        style={{ backgroundColor: co.color }}
       />
     );
   });
