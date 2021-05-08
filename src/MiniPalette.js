@@ -10,6 +10,7 @@ function MiniPallete(props) {
     colors,
     handleClick,
     deletePalette,
+    openDialog,
     id,
   } = props;
   const miniColorBoxes = colors.map((co) => {
@@ -23,7 +24,7 @@ function MiniPallete(props) {
   });
   const removePalatte = (e) => {
     e.stopPropagation();
-    deletePalette(id);
+    openDialog(id);
   };
   return (
     <div className={classes.root} onClick={handleClick}>
