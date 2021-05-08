@@ -2,8 +2,27 @@ import React, { useState, useEffect } from "react";
 import { ChromePicker } from "react-color";
 import Button from "@material-ui/core/Button";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import { makeStyles } from "@material-ui/core/styles";
+const drawerWidth = 400;
 
+const useStyles = makeStyles((theme) => ({
+  picker: {
+    width: "100% !important",
+    marginTop: "2rem",
+  },
+  addColor: {
+    width: "100%",
+    padding: "1rem",
+    marginTop: "1rem",
+    fontSize: "2rem",
+  },
+  colorNameInput: {
+    height: "70px",
+    width: "100%",
+  },
+}));
 function ColorPicketForm(props) {
+  const classes = useStyles();
   const { paletteIsfull, colors, addNewColor } = props;
   const [currentColor, setCurrentColor] = useState("teal");
   const [newColorName, setNewColorName] = useState("");
@@ -27,6 +46,7 @@ function ColorPicketForm(props) {
   return (
     <div>
       <ChromePicker
+        className={classes.picker}
         color={currentColor}
         onChangeComplete={updateCurrentColor}
       />
@@ -37,6 +57,10 @@ function ColorPicketForm(props) {
         }}
       >
         <TextValidator
+          variant="filled"
+          margin="normal"
+          placeholder="Color name"
+          className={classes.colorNameInput}
           value={newColorName}
           name="newColorName"
           onChange={handleChange}
@@ -49,6 +73,7 @@ function ColorPicketForm(props) {
         />
 
         <Button
+          className={classes.addColor}
           variant="contained"
           color="primary"
           type="submit"
