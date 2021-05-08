@@ -7,15 +7,29 @@ import PaletteList from "./PaletteList";
 import SingleColorPalette from "./SingleColorPalette";
 import NewPaletteForm from "./NewPaletteForm";
 function App() {
-  const [palettes, setPalettes] = useState(seedColors);
+  const savePalettes = JSON.parse(window.localStorage.getItem("palettes"));
+  console.log("savePalettes", savePalettes);
+
+  const [palettes, setPalettes] = useState(savePalettes || seedColors);
   const findPallet = (id) => {
     return palettes.find(function (palette) {
       return palette.id === id;
     });
   };
 
+  const deletePalette = (id) => {
+    setPalettes(
+      (prevstate) => prevstate.filter((palette) => palette.id !== id),
+      syncLocalStorage(palettes)
+    );
+  };
   const savePalette = (newPalette) => {
     setPalettes((prevPalettes) => [...prevPalettes, newPalette]);
+    syncLocalStorage([...palettes, newPalette]);
+  };
+
+  const syncLocalStorage = (addedPalettes) => {
+    window.localStorage.setItem("palettes", JSON.stringify(addedPalettes));
   };
   return (
     <div>
@@ -35,7 +49,11 @@ function App() {
           exact
           path="/"
           render={(routeProps) => (
-            <PaletteList palletes={palettes} {...routeProps} />
+            <PaletteList
+              palletes={palettes}
+              {...routeProps}
+              deletePalette={deletePalette}
+            />
           )}
         />
         <Route

@@ -7,8 +7,7 @@ function PaletteList(props) {
   const goToPalette = (id) => {
     props.history.push(`/palette/${id}`);
   };
-  const { palletes, classes } = props;
-  console.log(palletes);
+  const { palletes, classes, deletePalette } = props;
   return (
     <div className={classes.root}>
       <div className={classes.container}>
@@ -23,6 +22,7 @@ function PaletteList(props) {
               key={i}
               {...pallete}
               handleClick={() => goToPalette(pallete.id)}
+              deletePalette={deletePalette}
             />
             // <Link to={`/palette/${pallete.id}`}>{pallete.paletteName}</Link>
           ))}
