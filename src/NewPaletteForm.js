@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import clsx from "clsx";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
@@ -13,62 +13,8 @@ import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { arrayMove } from "react-sortable-hoc";
 import ColorPicketForm from "./ColorPicketForm";
 import PaletteFormNav from "./PaletteFormNav";
-const drawerWidth = 400;
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
+import useStyles from "./styles/NewPaletteFormStyles";
 
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  drawerHeader: {
-    display: "flex",
-    alignItems: "center",
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: "flex-end",
-  },
-  content: {
-    flexGrow: 1,
-    height: "calc(100vh - 64px)",
-    // padding: theme.spacing(3),
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: -drawerWidth,
-  },
-  contentShift: {
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
-  },
-  drawerContainer: {
-    width: "90%",
-    display: "flex",
-    height: "100%",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  buttons: {
-    width: "100%",
-  },
-  button: {
-    width: "50%",
-  },
-}));
 function NewPaletteForm(props) {
   const MAX_COLORS = 20;
   const { savePalette: appSavePalette, palettes } = props;
@@ -77,7 +23,7 @@ function NewPaletteForm(props) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const handleDrawerOpen = () => {
-    setOpen(true);
+    setOpen((prev) => !prev);
   };
 
   const handleDrawerClose = () => {
@@ -92,14 +38,12 @@ function NewPaletteForm(props) {
     setColors((prevColor) => [...prevColor, newColor]);
   };
 
-  const savePalette = (newPaletteName) => {
-    let newName = newPaletteName;
-    const newPalette = {
-      paletteName: newName,
-      id: newName.toLowerCase().replace(/\s/g, "-"),
-      colors,
-    };
-    appSavePalette(newPalette);
+  const savePalette = (newPaletteObj) => {
+    newPaletteObj.id = newPaletteObj.paletteName
+      .toLowerCase()
+      .replace(/\s/g, "-");
+    newPaletteObj.colors = colors;
+    appSavePalette(newPaletteObj);
     props.history.push("/");
   };
 
