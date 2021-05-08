@@ -45,9 +45,9 @@ export default {
       width: "50%",
       height: "20%",
     },
-    [sizes.down("xs")]: {
+    [sizes.down("sm")]: {
       width: "100%",
-      height: "10%",
+      height: "5%",
     },
   },
 };
