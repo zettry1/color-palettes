@@ -1,11 +1,24 @@
 import sizes from "./sizes";
+import bg from "./Pattern-Randomized.svg";
 export default {
+  "@global": {
+    ".fade-exit": {
+      // color: "purple",
+      opacity: 1,
+    },
+    ".fade-exit-active": {
+      opacity: 0,
+      transition: "opacity 500ms ease-out",
+    },
+  },
   root: {
     backgroundColor: "blue",
     height: "100vh",
     display: "flex",
     alignItems: "flex-start",
     justifyContent: "center",
+    backgroundColor: "#1e8feb",
+    backgroundImage: `url(${bg})`,
   },
   container: {
     width: "50%",
